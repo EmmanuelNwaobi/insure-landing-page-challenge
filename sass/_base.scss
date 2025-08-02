@@ -1,0 +1,196 @@
+//COLORS
+$color-blue-primary-950: hsl(256, 26%, 20%);
+$color-blue-primary-500: hsl(216, 30%, 68%);
+
+//GRAYS
+$color-gray-950: hsl(270, 9%, 17%);
+$color-gray-700: hsl(273, 4%, 51%);
+$color-gray-50: hsl(0, 0%, 98%);
+
+//FONT-SIZE
+$body-font-size: 1.6rem;
+
+//FONT FAMILY
+$heading-font-family: "DM Serif Display", serif;
+$body-font-family: "Karla", sans-serif;
+
+//BREAKPOINTS
+$bp-desktop: 102.5em; //1640px
+$bp-large: 75em; //1200px
+$bp-medium: 68.5em; //1095px
+$bp-small: 47.3em; //757px
+$bp-smallest: 35.9em; //575px
+
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%;
+
+  @media only screen and (max-width: $bp-large) {
+    font-size: 56.25%;
+  }
+
+  @media only screen and (min-width: $bp-desktop) {
+    font-size: 75%;
+  }
+}
+
+body {
+  font-size: $body-font-size;
+  font-family: $body-font-family;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.container {
+  display: grid;
+  grid-template-rows: 7rem calc(100vh - 7rem) repeat(3, min-content);
+  grid-template-columns:
+    [full-start] minmax(6rem, 1fr) [center-start] repeat(
+      8,
+      [col-start] minmax(min-content, 18rem) [col-end]
+    )
+    [center-end] minmax(6rem, 1fr) [full-end];
+
+  @media only screen and (max-width: $bp-medium) {
+    grid-template-rows: 7rem calc(150vh - 7rem) repeat(3, min-content);
+  }
+  @media only screen and (max-width: $bp-small) {
+    grid-template-rows: 7rem calc(180vh - 7rem) repeat(3, min-content);
+  }
+  position: relative;
+  overflow: hidden;
+}
+
+//REUSEABLE BUTTON STYLE
+.btn {
+  &:link,
+  &:visited {
+    text-decoration: none;
+    font-size: 2rem;
+    text-transform: uppercase;
+    padding: 0.9rem 1.8rem;
+    position: relative;
+    transition: color 0.2s ease; // Adding a transition for the color change
+  }
+
+  &--black {
+    color: $color-gray-950;
+    border: 2px solid currentColor;
+    z-index: 1;
+
+    //THIS IS THE KEY FIX: Change the text color on hover
+    &:hover {
+      color: $color-gray-50;
+    }
+
+    &::before {
+      content: "";
+      width: 3px;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: scaleY(0);
+      background-color: $color-gray-950;
+      transition: transform 0.2s, width 0.4s cubic-bezier(1, 0, 0, 1) 0.2s,
+        background-color 0.1s;
+      z-index: -1; //Make sure the pseudo-element is behind the text
+    }
+
+    &:hover::before {
+      transform: scaleY(1);
+      width: 100%;
+    }
+  }
+
+  &--white {
+    color: $color-gray-50;
+    border: 2px solid currentColor;
+    z-index: 1;
+
+    &:hover {
+      color: $color-gray-950;
+    }
+
+    &::before {
+      content: "";
+      width: 3px;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: scaleY(0);
+      background-color: $color-gray-50;
+      transition: transform 0.2s, width 0.4s cubic-bezier(1, 0, 0, 1) 0.2s,
+        background-color 0.1s;
+      z-index: -1; //Make sure the pseudo-element is behind the text
+    }
+
+    &:hover::before {
+      transform: scaleY(1);
+      width: 100%;
+    }
+  }
+}
+
+//HEADING STYLES
+%heading {
+  font-weight: 400;
+  font-family: $heading-font-family;
+  line-height: 1;
+}
+
+.heading-1 {
+  @extend %heading;
+  font-size: 6.4rem;
+}
+
+.heading-1::before {
+  content: "";
+  display: block;
+  height: 2px;
+  width: 25%;
+  background-color: currentColor;
+  margin-bottom: 4.8rem;
+
+  @media only screen and (max-width: $bp-medium) {
+    display: none;
+  }
+}
+
+.heading-2 {
+  @extend %heading;
+  font-size: 4.8rem;
+  color: $color-gray-950;
+
+  &--white {
+    color: $color-gray-50;
+    width: 40%;
+    @media only screen and (max-width: $bp-medium) {
+      width: 60%;
+    }
+
+    @media only screen and (max-width: $bp-small) {
+      width: 100%;
+    }
+  }
+}
+
+.heading-3 {
+  @extend %heading;
+  font-size: 2.4rem;
+  color: $color-gray-950;
+}
+
+//Helper classes
+.mb-medium {
+  margin-bottom: 6.4rem;
+}
